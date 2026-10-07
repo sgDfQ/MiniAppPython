@@ -27,8 +27,7 @@ def test_route_email_valide():
 
 def test_route_email_invalide():
     reponse = client.get("/email-valide/pas-un-email")
-    assert reponse.status_code == 200
-    assert reponse.json()["valide"] is False
+    assert reponse.status_code == 400
 
 
 def test_mdp_robuste_normal():
@@ -41,3 +40,14 @@ def test_mdp_robuste_limite():
 
 def test_mdp_robuste_erreur():
     assert mdp_robuste("abcdefgh") is False
+
+
+def test_route_mdp_robuste():
+    reponse = client.get("/mdp-robuste/Abcdefg1")
+    assert reponse.status_code == 200
+    assert reponse.json()["valide"] is True
+
+
+def test_route_mdp_faible():
+    reponse = client.get("/mdp-robuste/abc")
+    assert reponse.status_code == 400

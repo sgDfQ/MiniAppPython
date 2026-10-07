@@ -14,9 +14,9 @@ def sante():
 
 @app.get("/email-valide/{email}")
 def route_email_valide(email: str):
-    if email.strip() == "":
-        raise erreur_400("L'email ne doit pas être vide")
-    return {"email": email, "valide": email_valide(email)}
+    if not email_valide(email):
+        raise erreur_400("Email invalide")
+    return {"email": email, "valide": True}
 
 @app.get("/mdp-robuste/{mdp}")
 def route_mdp_robuste(mdp: str):

@@ -18,3 +18,16 @@ def test_celsius_fahrenheit_sous_zero_absolu():
         celsius_fahrenheit(-300)
 
 
+# --- km_miles ---
+
+def test_km_miles_de_10():
+    assert round(km_miles(10), 2) == 6.21
+
+
+def test_km_miles_de_0():
+    assert km_miles(0) == 0
+
+
+def test_km_miles_negatif():
+    with pytest.raises(ValueError):
+        km_miles(-5)

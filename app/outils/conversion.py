@@ -15,3 +15,13 @@ def km_miles(km: float) -> float:
     if km < 0:
         raise ValueError("une distance ne peut pas être négative")
     return km / KM_PAR_MILE 
+
+TAUX_EUR = {"USD": 1.08, "GBP": 0.85, "JPY": 160.0, "CHF": 0.94}
+def euros_devise(montant: float, devise: str) -> float:
+    """Convertit un montant en euros vers une devise, avec des taux fixes."""
+    if montant < 0:
+        raise ValueError("le montant ne peut pas être négatif")
+    devise = devise.strip().upper()
+    if devise not in TAUX_EUR:
+        raise ValueError(f"devise inconnue : {devise}")
+    return round(montant * TAUX_EUR[devise], 2)

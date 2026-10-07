@@ -26,3 +26,10 @@ def route_celsius_fahrenheit(c: float):
     except ValueError as e:
         raise erreur_400(str(e))
 
+
+@app.get("/km-miles/{km}")
+def route_km_miles(km: float):
+    try:
+        return {"km": km, "resultat": km_miles(km)}
+    except ValueError as e:
+        raise erreur_400(str(e))

@@ -67,10 +67,20 @@ def test_route_celsius_fahrenheit_400():
     r = client.get("/celsius-fahrenheit/-300")
     assert r.status_code == 400
 
+def test_route_km_miles_ok():
+    r = client.get("/km-miles/10")
+    assert r.status_code == 200
+    assert round(r.json()["resultat"], 2) == 6.21
 
 def test_route_km_miles_400():
     r = client.get("/km-miles/-5")
     assert r.status_code == 400
+
+
+def test_route_euros_devise_ok():
+    r = client.get("/euros-devise/100/USD")
+    assert r.status_code == 200
+    assert r.json()["resultat"] == 108
 
 
 def test_route_euros_devise_400():

@@ -10,7 +10,8 @@ def palindrome(chaine):
     return True
 
 
-if palindrome(input()):
-    print("Palindrome.")
-else:
-    print("Pas palindrome.")
+if __name__ == "__main__":
+    if palindrome(input()):
+        print("Palindrome.")
+    else:
+        print("Pas palindrome.")

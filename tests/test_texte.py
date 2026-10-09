@@ -1,3 +1,9 @@
+from fastapi.testclient import TestClient
+from app.main import app
+from app.outils.texte import palindrome
+
+client = TestClient(app)
+
 #Test pour definir si le palindrome est: Normal, limite ou non symetrique
 def test_palindrome_normal():
     assert palindrome("kayak") is True

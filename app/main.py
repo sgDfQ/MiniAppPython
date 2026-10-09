@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException
 
 from app.erreurs import erreur_400
-from app.outils.validation import email_valide, mdp_robuste
 from app.outils.texte import palindrome
+from app.outils.validation import email_valide, mdp_robuste
 
 app = FastAPI(title="Mini API")
 

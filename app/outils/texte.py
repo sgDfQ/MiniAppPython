@@ -1,16 +1,8 @@
-def palindrome(chaine):
-    chaine = chaine.lower()
-    i, longueur = 0, len(chaine)
-
-    while i < longueur:
-        if chaine[i] != chaine[-i - 1]:
-            return False
-        i += 1
-
-    return True
+import unicodedata
 
 
-if palindrome(input()):
-    print("Palindrome.")
-else:
-    print("Pas palindrome.")
+def palindrome(chaine: str) -> bool:
+    """Ignore la casse, les accents, les espaces et la ponctuation."""
+    sans_accents = unicodedata.normalize("NFD", chaine)
+    lettres = [c.lower() for c in sans_accents if c.isalnum()]
+    return lettres == lettres[::-1]

@@ -10,7 +10,23 @@ def palindrome(chaine):
     return True
 
 
-if palindrome(input()):
-    print("Palindrome.")
-else:
-    print("Pas palindrome.")
+VOYELLES = "aeiouyàâäéèêëîïôöùûüÿ"
+
+
+def compter_voyelles(chaine):
+    total = 0
+    for caractere in chaine.lower():
+        if caractere in VOYELLES:
+            total += 1
+    return total
+
+
+def inverser(chaine):
+    return chaine[::-1]
+
+
+if __name__ == "__main__":
+    if palindrome(input()):
+        print("Palindrome.")
+    else:
+        print("Pas palindrome.")

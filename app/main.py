@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 from app.erreurs import erreur_400
+from app.outils.texte import compter_voyelles, inverser, palindrome
 from app.outils.validation import email_valide, mdp_robuste
 
 app = FastAPI(title="Mini API")
@@ -23,6 +24,20 @@ def route_palindrome(chaine: str):
         "chaine": chaine,
         "est_palindrome": palindrome(chaine)
     }
+
+@app.get("/voyelles/{chaine}")
+def route_voyelles(chaine: str):
+    if not any(caractere.isalpha() for caractere in chaine):
+        raise erreur_400("La chaîne doit contenir au moins une lettre")
+    return {"chaine": chaine, "nombre_voyelles": compter_voyelles(chaine)}
+
+@app.get("/inverser/{chaine}")
+def route_inverser(chaine: str):
+    a_lettre = any(caractere.isalpha() for caractere in chaine)
+    a_chiffre = any(caractere.isdigit() for caractere in chaine)
+    if not a_lettre or a_chiffre:
+        raise erreur_400("La chaîne doit contenir du texte, sans chiffres")
+    return {"chaine": chaine, "inverse": inverser(chaine)}
 
 @app.get("/email-valide/{email}")
 def route_email_valide(email: str):

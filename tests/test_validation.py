@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
 from app.main import app
-from app.outils.validation import email_valide, mdp_robuste
+from app.outils.validation import code_postal, email_valide, mdp_robuste
 
 
 def test_email_valide_normal():
@@ -50,4 +50,30 @@ def test_route_mdp_robuste():
 
 def test_route_mdp_faible():
     reponse = client.get("/mdp-robuste/abc")
+    assert reponse.status_code == 400
+
+
+def test_code_postal_normal():
+    assert code_postal("75001") is True
+
+
+def test_code_postal_limite():
+    assert code_postal("00000") is True
+    assert code_postal("7500") is False
+    assert code_postal("750011") is False
+
+
+def test_code_postal_erreur():
+    assert code_postal("75A01") is False
+    assert code_postal("") is False
+
+
+def test_route_code_postal():
+    reponse = client.get("/code-postal/75001")
+    assert reponse.status_code == 200
+    assert reponse.json() == {"code": "75001", "valide": True}
+
+
+def test_route_code_postal_invalide():
+    reponse = client.get("/code-postal/abcde")
     assert reponse.status_code == 400

@@ -4,7 +4,7 @@ from app.erreurs import erreur_400
 from app.outils.conversion import celsius_fahrenheit, euros_devise, km_miles
 from app.outils.math import factorielle
 from app.outils.texte import compter_voyelles, inverser, palindrome
-from app.outils.validation import email_valide, mdp_robuste
+from app.outils.validation import code_postal, email_valide, mdp_robuste
 
 app = FastAPI(title="Mini API")
 
@@ -56,6 +56,13 @@ def route_mdp_robuste(mdp: str):
     if not mdp_robuste(mdp):
         raise erreur_400("Mot de passe trop faible : 8 caractères minimum, avec majuscule, minuscule et chiffre")
     return {"valide": True}
+
+
+@app.get("/code-postal/{code}")
+def route_code_postal(code: str):
+    if not code_postal(code):
+        raise erreur_400("Code postal invalide : 5 chiffres attendus")
+    return {"code": code, "valide": True}
 
 
 @app.get("/factorielle/{n}")

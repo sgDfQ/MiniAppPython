@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 
 from app.erreurs import erreur_400
+from app.outils.conversion import celsius_fahrenheit, euros_devise, km_miles
 from app.outils.math import factorielle
 from app.outils.texte import compter_voyelles, inverser, palindrome
 from app.outils.validation import email_valide, mdp_robuste
@@ -61,5 +62,30 @@ def route_mdp_robuste(mdp: str):
 def route_factorielle(n: int):
     try:
         return {"n": n, "resultat": factorielle(n)}
+    except ValueError as e:
+        raise erreur_400(str(e))
+
+
+@app.get("/celsius-fahrenheit/{c}")
+def route_celsius_fahrenheit(c: float):
+    try:
+        return {"c": c, "resultat": celsius_fahrenheit(c)}
+    except ValueError as e:
+        raise erreur_400(str(e))
+
+
+@app.get("/km-miles/{km}")
+def route_km_miles(km: float):
+    try:
+        return {"km": km, "resultat": km_miles(km)}
+    except ValueError as e:
+        raise erreur_400(str(e))
+
+
+@app.get("/euros-devise/{montant}/{devise}")
+def route_euros_devise(montant: float, devise: str):
+    try:
+        return {"montant": montant, "devise": devise.upper(),
+                "resultat": euros_devise(montant, devise)}
     except ValueError as e:
         raise erreur_400(str(e))

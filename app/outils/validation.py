@@ -20,3 +20,7 @@ def mdp_robuste(mdp):
             a_chiffre = True
 
     return len(mdp) >= 8 and a_majuscule and a_minuscule and a_chiffre
+
+
+def code_postal(code):
+    return re.fullmatch(r"[0-9]{5}", code) is not None

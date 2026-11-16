@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 
 from app.erreurs import erreur_400
 from app.outils.conversion import celsius_fahrenheit, euros_devise, km_miles
-from app.outils.math import factorielle
+from app.outils.math import est_premier, factorielle, pgcd
 from app.outils.texte import compter_voyelles, inverser, palindrome
 from app.outils.validation import code_postal, email_valide, mdp_robuste
 
@@ -69,6 +69,22 @@ def route_code_postal(code: str):
 def route_factorielle(n: int):
     try:
         return {"n": n, "resultat": factorielle(n)}
+    except ValueError as e:
+        raise erreur_400(str(e))
+
+
+@app.get("/est-premier/{n}")
+def route_est_premier(n: int):
+    try:
+        return {"n": n, "est_premier": est_premier(n)}
+    except ValueError as e:
+        raise erreur_400(str(e))
+
+
+@app.get("/pgcd/{a}/{b}")
+def route_pgcd(a: int, b: int):
+    try:
+        return {"a": a, "b": b, "resultat": pgcd(a, b)}
     except ValueError as e:
         raise erreur_400(str(e))
 
